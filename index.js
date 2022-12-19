@@ -6,7 +6,7 @@ const token = '5879394130:AAGw9NgBEpycnISeNDfUP5VF_sYjf11UUYQ'
 const bot = new TelegramBot(token, {polling: true});
 
 
-// let link = '';
+// let link = '';c
 // (async function linkHandler(value){
 //     let driver = await new Builder().forBrowser('chrome').build();
 //     if(value) {
