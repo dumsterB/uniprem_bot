@@ -4,9 +4,13 @@ const {Builder,By,Key,untill} = require('selenium-webdriver');
 const TelegramBot = require('node-telegram-bot-api');
 const token = '5879394130:AAGw9NgBEpycnISeNDfUP5VF_sYjf11UUYQ'
 const bot = new TelegramBot(token, {polling: true});
+// get request
+axios.get('https://www.freepik.com/download-file/9798891')
+    .then((res)=>{
+        console.log(res)
+    })
 
-
-// let link = '';c
+// let link = '';
 // (async function linkHandler(value){
 //     let driver = await new Builder().forBrowser('chrome').build();
 //     if(value) {
@@ -40,18 +44,18 @@ const bot = new TelegramBot(token, {polling: true});
 //         }
 //     }
 // })('https://www.freepik.com/premium-photo/front-view-generic-brandless-moder-car_4677074.htm#query=cars&position=18&from_view=search&track=sph')
-
-bot.onText(/\/echo (.+)/, (msg, match) => {
-    const chatId = msg.chat.id;
-    const resp = match[1];
-    bot.sendMessage(chatId, resp);
-});
-bot.on('message', (msg) => {
-    const chatId = msg.chat.id;
-    let replyText = msg.text
-    if (replyText != "/start") {
-        bot.sendMessage(chatId, `hello ${replyText}`)
-    }else{
-        bot.sendMessage(chatId, `Добро пожаловать ${msg.from.username} `)
-    }
-});
+//
+// bot.onText(/\/echo (.+)/, (msg, match) => {
+//     const chatId = msg.chat.id;
+//     const resp = match[1];
+//     bot.sendMessage(chatId, resp);
+// });
+// bot.on('message', (msg) => {
+//     const chatId = msg.chat.id;
+//     let replyText = msg.text
+//     if (replyText != "/start") {
+//         bot.sendMessage(chatId, `hello ${replyText}`)
+//     }else{
+//         bot.sendMessage(chatId, `Добро пожаловать ${msg.from.username} `)
+//     }
+// });
