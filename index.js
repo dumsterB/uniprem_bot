@@ -1,13 +1,10 @@
-const path = require("path");
-const { readdir } = require("fs/promises");
-const axios = require("axios");
-const driver = require("selenium-webdriver");
-const { Builder, By, Key, untill } = require("selenium-webdriver");
-const TelegramBot = require("node-telegram-bot-api");
+import { parse } from "path";
+import { readdir } from "fs/promises";
+import selenium from "selenium-webdriver";
+let { Builder, By, Key, untill } = selenium;
+import TelegramBot from "node-telegram-bot-api";
 const token = "5879394130:AAGw9NgBEpycnISeNDfUP5VF_sYjf11UUYQ";
 const bot = new TelegramBot(token, { polling: true });
-// get request
-let defLink = " front-view-generic-brandless-moder-car ";
 
 let downloadFolder = process.env.USERPROFILE + "/Downloads";
 
@@ -31,7 +28,7 @@ const findByName = async (dir, name) => {
 
   for (const file of files) {
     // Method 1:
-    const filename = path.parse(file).name;
+    const filename = parse(file).name;
     let splittedName = filename.split(" ")[0];
     if (splittedName === name) {
       matchedFiles.push(file);
@@ -79,13 +76,13 @@ function linkHandler(value) {
                 if (files.length > 0) {
                   fileName = files[files.length - 1];
                   resolve(downloadFolder + "/" + fileName);
-                  driver.quit();
+                  // driver.quit();
                 } else {
                   countInterval++;
                   if (countInterval > 15) {
                     clearInterval(interval);
                     reject("File not found");
-                    driver.quit();
+                    // driver.quit();
                   }
                 }
               }, 2000);
