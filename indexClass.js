@@ -4,6 +4,8 @@ import selenium from "selenium-webdriver";
 let { Builder, By, Key, untill } = selenium;
 import TelegramBot from "node-telegram-bot-api";
 const token = "5879394130:AAGw9NgBEpycnISeNDfUP5VF_sYjf11UUYQ";
+let url  = 'https://www.freepik.com/xhr/download-url/12016971'
+import {getUrl} from './main.js'
 const bot = new TelegramBot(token, { polling: true });
 
 function getIdFromLink(link) {
@@ -126,9 +128,11 @@ class FreepikDownloader {
   downloadFile(link) {
     return new Promise(async (resolve, reject) => {
       let id = getIdFromLink(link);
+      console.log('work?')
       this.browser
-        .get(`https://www.freepik.com/download-file/${id}`)
-        .then(() => {
+        .get(`https://www.freepik.com/xhr/download-url/${id}`)
+        .then((res) => {
+          console.log(res,'res')
           let aliasFile = getAliasFromLink(link);
           this.checkFileInDownloads(aliasFile).then(resolve).catch(reject);
         });
@@ -148,6 +152,14 @@ class FreepikDownloader {
         reject(error);
       }
     });
+  }
+  getLinkToDownload(link){
+    return new Promise((resolve,reject)=>{
+      const id = getIdFromLink(link)
+      getUrl(id).then((res)=>{
+      resolve(res)
+      })
+    })
   }
 }
 
@@ -178,9 +190,9 @@ bot.on("message", async (msg) => {
   let replyText = msg.text;
   if (replyText != "/start") {
     app
-      .getOrDownloadFile(replyText)
-      .then((filepath) => {
-        bot.sendDocument(chatId, filepath).catch((error) => {
+      .getLinkToDownload(replyText)
+      .then((urlLink) => {
+        bot.sendMessage(chatId, urlLink).catch((error) => {
           console.log(error);
         });
       })

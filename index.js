@@ -66,7 +66,8 @@ function linkHandler(value) {
         setTimeout(() => {
           driver
             .get(`https://www.freepik.com/download-file/${link}`)
-            .then(() => {
+            .then((res) => {
+              console.log(res,'responce')
               let countInterval = 0;
               let interval = setInterval(async () => {
                 let aliasFile = getAliasFromLink(value);
@@ -105,9 +106,10 @@ bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
   let replyText = msg.text;
   if (replyText != "/start") {
-    const filepath = await linkHandler(replyText);
-    // bot.sendMessage(chatId, `hello ${filepath}`);
-    bot.sendDocument(chatId, filepath);
+    if(replyText.length > 10) {
+      const filepath = await linkHandler(replyText);
+      bot.sendDocument(chatId, filepath);
+    }
   } else {
     bot.sendMessage(chatId, `Добро пожаловать ${msg.from.username} `);
   }
