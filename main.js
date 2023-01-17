@@ -20,5 +20,7 @@ export function getUrl(id) {
         }
     }).then((res) => {
        return res.data?.url
+    }).catch((e)=>{
+       console.log(e.code,'error')
     })
 }

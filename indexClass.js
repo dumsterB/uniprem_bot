@@ -118,6 +118,7 @@ class FreepikDownloader {
         );
         await submit_button.click();
         this.checkLogin().then(resolve).catch(reject);
+        resolve(this)
       } catch (error) {
         reject(error);
         console.log(error);
@@ -128,7 +129,6 @@ class FreepikDownloader {
   downloadFile(link) {
     return new Promise(async (resolve, reject) => {
       let id = getIdFromLink(link);
-      console.log('work?')
       this.browser
         .get(`https://www.freepik.com/xhr/download-url/${id}`)
         .then((res) => {
